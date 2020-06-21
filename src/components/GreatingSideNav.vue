@@ -75,7 +75,6 @@ export default {
 
   mounted: function() {
     eventBus.$on('selected', (data) => {
-      console.log("Updating after selection");
       let greating = data.data;
       this.greating = greating;
       this.chosenRestaurant = greating.restaurant !== undefined? greating.restaurant.name: undefined;

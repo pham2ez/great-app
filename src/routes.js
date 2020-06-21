@@ -12,7 +12,7 @@ export default new Router({
       component: () => import('./pages/MainPage.vue')
     },
     {
-      path: '/invite/:grIdHash',
+      path: '/api/invite/:grIdHash',
       name: 'invite',
       component: () => import('./pages/InvitePage.vue')
     }

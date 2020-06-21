@@ -112,14 +112,14 @@ export default {
     },
 
     accept: function(grIdHash) {
-      axios.post('/invite/' + grIdHash + '/accept')
+      axios.post('/api/invite/' + grIdHash + '/accept')
         .then(res => {
           eventBus.$emit('accepted-invite');
         });
     },
 
     decline: function(grIdHash) {
-      axios.post('/invite/' + grIdHash + '/decline')
+      axios.post('/api/invite/' + grIdHash + '/decline')
         .then(res => {
           eventBus.$emit('declined-invite');
         });

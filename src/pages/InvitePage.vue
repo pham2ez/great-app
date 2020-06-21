@@ -35,7 +35,6 @@ export default {
   computed: {
   },
   created: function() {
-    // console.log($route.params.grIdHash);
     axios.get('/api/me')
         .then(res => {
           window.email = res.data.email;

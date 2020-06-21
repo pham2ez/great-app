@@ -180,12 +180,9 @@ class Restaurants {
     static consolidate(restaurants, criteria=undefined) {
         let consolidated = [];
         let idToRestaurant = {};
-        console.log('outer criteria');
-        console.log(criteria);
         restaurants.forEach(list => {
             list.forEach(r => {
                 if (!idToRestaurant[r.id]) {
-                    console.log('f');
                     idToRestaurant[r.id] = JSON.parse(JSON.stringify(r));
                 }
                 idToRestaurant[r.id].tags = [...new Set(
@@ -193,9 +190,7 @@ class Restaurants {
                 )];
                 idToRestaurant[r.id].score = 0;
                 if (criteria !== undefined) {
-                    console.log('criteria');
                     idToRestaurant[r.id].tags = idToRestaurant[r.id].tags.filter(tag => criteria.includes(tag));
-                    console.log(idToRestaurant[r.id].tags);
                     idToRestaurant[r.id].score = criteria.filter(crit => idToRestaurant[r.id].tags.includes(crit)).length;
                 }
                     // idToRestaurants[r.id].tags = [...idToRestaurants[r.id].tags];
@@ -204,8 +199,6 @@ class Restaurants {
         Object.keys(idToRestaurant).forEach(id => {
             consolidated.push(idToRestaurant[id]);
         });
-        console.log('consolidated');
-        // console.log(consolidated);
         return consolidated;
     }
 
@@ -217,7 +210,6 @@ class Restaurants {
 // const list1 = [{id: 1, tags: new Set()}];
 // const list2 = [{id: 2, tags: new Set(['vegetarian', 'Mexican'])}];
 // const restaurants = [list1, list2];
-// console.log(Restaurants.sort(Restaurants.consolidate(restaurants)));
 
 
 module.exports = Restaurants;

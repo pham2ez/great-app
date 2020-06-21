@@ -52,8 +52,6 @@ class Location {
                 const lat = response.geometry.location.lat;
                 const lon = response.geometry.location.lng;
                 cache[address] = {lat, lon};
-                console.log('nearest location');
-                console.log({lat, lon});
                 return {lat, lon};
             } else {
                 return 'invalid address';
@@ -97,22 +95,4 @@ class Location {
         };
     }
 }
-
-// expect ~ 37.790831, -122.407169
-// const sf = [{
-//     lat: 37.797749,
-//     lon: -122.412147
-//   }, {
-//     lat: 37.789068,
-//     lon: -122.390604
-//   }, {
-//     lat: 37.785269,
-//     lon: -122.421975
-//   }];
-  
-// console.log(Location.getAverageLocation(sf));
-
-// Location.getCoordinatesFromAddress(Address('229 Vassar Street', 'Cambridge', 'MA')).then(response => {
-//     console.log(response);
-// });
 module.exports = Location;

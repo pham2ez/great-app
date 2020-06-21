@@ -105,7 +105,6 @@ const sendDigest = function() {
                                           
     transport.sendMail(mailOptions, (error, info) => {
       if (error) {
-         console.log(error);
          new Error(error);
       }
     });
@@ -149,7 +148,6 @@ const scheduleEmailNotifications = function(greating) {
                                                                 
         transport.sendMail(mailOptions, (error, info) => {
           if (error) {
-            console.log(error);
             new Error(error);
           }
         });
@@ -178,7 +176,6 @@ const scheduleEmailNotifications = function(greating) {
                                                                 
         transport.sendMail(mailOptions, (error, info) => {
           if (error) {
-            console.log(error);
             new Error(error);
           }
         });
@@ -207,7 +204,6 @@ const scheduleEmailNotifications = function(greating) {
                                                                 
         transport.sendMail(mailOptions, (error, info) => {
           if (error) {
-            console.log(error);
             new Error(error);
           }
         });

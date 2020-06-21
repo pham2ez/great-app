@@ -55,7 +55,6 @@ export default {
   watch: {
     selected: function() {
       if (this.selected !== undefined && this.selected !== null) {
-        console.log('selected');
         axios.post(`/api/greatings/${this.greatingId}/restaurants/criteria`, {criteria: this.selected, user: this.currentUser.email})
         .then(() => {
         eventBus.$emit('add-pref-success', {});

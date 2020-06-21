@@ -100,7 +100,6 @@ router.post('/:grId/send', (req, res) => {
   }
   let greating = Greatings.findGreating(req.params.grId);
   Greatings.inviteMember(req.params.grId, req.body.email);
-  console.log("Updated greating invites: " + greating.invites);
   res.end('You successfully sent an invite for this grEATing!');
 });
 

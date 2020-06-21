@@ -200,15 +200,11 @@ const all_preferences = new Set(['mexican food', 'italian food', 'american food'
     let members = greating.members;
     // set search location
     await Greatings.updateLocation(id);
-    console.log('search location');
-    console.log(greating.searchLocation);
     // get all restrictions from users of grEAT
     let restrictions = new Set();
     members.forEach(m =>
       restrictions = new Set(function*() { yield* restrictions; yield* m.getRestrictions(); }())
     );
-    console.log('restrictions');
-    console.log(restrictions);
     greating.restrictions = [...restrictions];
     // get restaurants satisfying restrictions
     let restaurants = [];
@@ -245,8 +241,6 @@ const all_preferences = new Set(['mexican food', 'italian food', 'american food'
         restrictions = new Set(function*() { yield* restrictions; yield* m.getRestrictions(); }())
       );
       restrictions = [...restrictions];
-      console.log('restrictions');
-      console.log(restrictions);
       // only load new results if restrictions or location changed
       if (!Utils.containsSame(greating.restrictions, restrictions) ||
            (oldLocation.lat !== greating.searchLocation.lat || oldLocation.lon !== greating.searchLocation.lon)
@@ -292,8 +286,6 @@ const all_preferences = new Set(['mexican food', 'italian food', 'american food'
         {return response}));
      });
      allRestaurants = await Promise.all(allRestaurants);
-     console.log('restrictions/preferences');
-     console.log([...greating.restrictions, ...Greatings.getAllPreferences(id)]);
      greating.restaurants = Greatings.sort(Restaurants.consolidate(allRestaurants, [...greating.restrictions, ...Greatings.getAllPreferences(id)]), greating.sortby, id);
 
      // Manage notifications
@@ -430,7 +422,6 @@ const all_preferences = new Set(['mexican food', 'italian food', 'american food'
      let greating = Greatings.findGreating(greatingId);
      greating.restaurantId = {id: restaurant.place_id, name: restaurant.name};
      if(greating.restaurantId !== undefined && greating.chosenTime !== undefined){
-       console.log('Finalized greating');
        greating.status = 'Finalized';
      }
 
@@ -457,7 +448,6 @@ const all_preferences = new Set(['mexican food', 'italian food', 'american food'
     let greating = Greatings.findGreating(greatingId);
     greating.chosenTime = time;
     if(greating.restaurantId !== undefined && greating.chosenTime !== undefined){
-      console.log('Finalized greating');
       greating.status = 'Finalized';
      }
 

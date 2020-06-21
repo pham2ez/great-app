@@ -85,8 +85,6 @@ export default {
       var selected = this.selectedwebsiteoptions.concat(this.selectedemailoptions);
       if (selected !== undefined && selected !== null && selected.length > 0) {
         axios.put('/api/notifications/' + encodeURIComponent(window.email) + '/preferences', { preferences: selected, emailtime: this.selectedgreatingnotificationoption })
-          .then(res => {
-          })
           .catch(err => alert(err.response.data.error));
       }
     },

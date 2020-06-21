@@ -16,7 +16,7 @@ export default {
   name: 'Invite',
   methods: {
     accept: function() {
-      axios.post('/invite/' + this.$route.params.grIdHash + '/accept')
+      axios.post('/api/invite/' + this.$route.params.grIdHash + '/accept')
         .then(() => {
           this.$router.push({name: 'main'});
         })

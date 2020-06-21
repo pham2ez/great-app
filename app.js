@@ -29,7 +29,7 @@ app.use('/api', apiRouter);
 app.use('/api/restaurants', restaurantRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/greatings', greatingRouter);
-app.use('/invite', inviteRouter);
+app.use('/api/invite', inviteRouter);
 app.use('/api/notifications/', notificationsRouter);
 //app.use(function (req, res, next) {
 //    res.status(404).send("Sorry this url could not be found.")

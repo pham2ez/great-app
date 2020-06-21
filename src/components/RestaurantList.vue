@@ -1,7 +1,8 @@
 <template>
   <div class='wrapper'>
+    <h4>Search from zip code/restaurant name:</h4>
     <div class="search" v-if="browsing">
-      <h4>Search from zip code/restaurant name:</h4> <input type="text" v-model="search" placeholder="Search..."/>
+      <input type="text" v-model="search" placeholder="Search..."/>
       <button v-on:click="loadRestaurants"> Search </button>
       <b-dropdown id="dropdown" text="Filters" class="m-md-2">
         <div  v-for="(group,index) in filters" v-bind:key="index">
@@ -244,8 +245,6 @@ export default {
           this.locationHeader = `Showing Restaurants nearest to your Group`;
           axios.get(`/api/greatings/${this.greatingId}/restaurants/${this.sortCriteria}`).then(response => {
             this.restaurants = response.data;
-            console.log('inside restaurant list');
-            console.log(this.restaurants);
           });
       }
     },

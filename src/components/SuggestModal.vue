@@ -8,11 +8,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-import RestaurantList from './RestaurantList';
-import Utils from '../models/Utils';
-
-import { eventBus } from '../main';
+import RestaurantList from './RestaurantList.vue';
 
 export default {
   name: 'SuggestModal',

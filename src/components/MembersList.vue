@@ -10,7 +10,7 @@
 
     <h4> Members </h4>
     <div v-if='members.length>0' class='left-col'>
-      <div v-for='m in members'>
+      <div v-for='m in members' v-bind:key="m.email">
         <Member v-bind:first='m.firstName'
                 v-bind:last='m.lastName'
                 v-bind:email='m.email'/>
@@ -27,7 +27,7 @@
 
     <h4> Invited </h4>
     <div v-if='invited.length>0' class='left-col'>
-      <div v-for='m in invited'>
+      <div v-for='m in invited' v-bind:key="m.email">
         <Member v-bind:first='m.firstName'
                 v-bind:last='m.lastName'
                 v-bind:email='m.email'/>
@@ -42,7 +42,7 @@
     <br>
     <div v-if='!isFinal'>
       <h5> Invite Members </h5>
-      <p>Invite Link: /invite/{{ greating.idHash }}</p>
+      <p>Invite Link: /api/invite/{{ greating.idHash }}</p>
       <p>Search for and add new members by name and/or email: <Search v-bind:greatingId='greating.id'/>{{ successMessage }}</p>
     </div>
     <b-button v-if='isOrganizer && !isFinal' v-on:click='deleteGreating'> Delete grEATing </b-button>
@@ -76,7 +76,8 @@
         invited: [],
         organizer: Object,
         isOrganizer: false,
-        isFinal: false
+        isFinal: false,
+        successMessage: ''
       };
     },
 
@@ -101,10 +102,7 @@
 
       remove: function(member) {
         this.members = this.members.filter(m => m.email !== member.email);
-        axios.delete('/api/greatings/' + this.greating.id + '/members/' + member.email)
-          .then(res => {
-            return;
-          });
+        axios.delete('/api/greatings/' + this.greating.id + '/members/' + member.email);
       },
 
       leave: function() {
@@ -118,10 +116,7 @@
       },
 
       deleteGreating: function() {
-        axios.delete('/api/greatings/' + this.greating.id)
-          .then(res => {
-            return;
-          })
+        axios.delete('/api/greatings/' + this.greating.id);
 
         // Go back to the user's greatings
         eventBus.$emit('showGreatings');

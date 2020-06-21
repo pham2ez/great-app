@@ -62,9 +62,7 @@ Search with autocomplete. Code taken from https://alligator.io/vuejs/vue-autocom
 </template>
 
 <script>
-// eslint-disable-next-line
 import axios from 'axios';
-// eslint-disable-next-line
 import { eventBus } from '../main';
 import UserSearchDropdownItem from './UserSearchDropdownItem';
 
@@ -89,7 +87,7 @@ export default {
       invited: [],
       invitable: [],
       showSuccess: false,
-      successMessage: '',
+      successMessage: ''
     };
   },
 
@@ -118,7 +116,7 @@ export default {
       var name = result.firstName + ' ' + result.lastName;
       this.search = name;
       this.isOpen = false;
-      axios.post('/invite/' + this.greatingId + '/send', {email: result.email})
+      axios.post('/api/invite/' + this.greatingId + '/send', {email: result.email})
         .then(() => {
           this.successMessage = name + ' was invited successfully!';
           this.showSuccess = true;
@@ -126,7 +124,6 @@ export default {
             this.showSuccess = false;
             this.search = '';
           }, 2000);
-
           eventBus.$emit('invited-user');
         })
         .catch(err => {
