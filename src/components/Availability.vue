@@ -211,6 +211,9 @@ export default {
             }
             dind++;
           }
+// eslint-disable-next-line no-console
+console.log(this.availability);
+
 
 
       axios.get('/api/greatings/' + this.greatingId + '/schedule/availability')
