@@ -14,7 +14,7 @@ Contains 2 lists of grEATings (active and past).
       <b-tabs pills card vertical v-model='tabId'>
         <b-tab title='Invited'>
           <b-card-text>
-            <div v-if='showActionMessasge' color='green'>
+            <div v-if='showActionMessage' color='green'>
               {{actionMessage}}
             </div>
 
@@ -28,7 +28,7 @@ Contains 2 lists of grEATings (active and past).
           <b-card-text>
             <div v-if='active.length === 0'>You have no active grEATings.</div>
             <div v-else v-for='greating in active' v-bind:key='greating.id'>
-              <Greating v-bind:greating='greating'/>
+              <Greating v-bind:greating='greating' v-bind:invitePreview='false'/>
             </div>
           </b-card-text>
         </b-tab>
@@ -36,7 +36,7 @@ Contains 2 lists of grEATings (active and past).
           <b-card-text>
             <div v-if='past.length === 0'>You have no past grEATings.</div>
             <div v-else v-for='greating in past' v-bind:key='greating.id'>
-              <Greating v-bind:greating='greating'/>
+              <Greating v-bind:greating='greating' v-bind:invitePreview='false'/>
             </div>
           </b-card-text>
         </b-tab>

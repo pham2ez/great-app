@@ -52,7 +52,7 @@ export default {
 
   props: {
     greating: Object,
-    invitePreview: false
+    invitePreview: Boolean
   },
 
   computed: {
@@ -113,14 +113,14 @@ export default {
 
     accept: function(grIdHash) {
       axios.post('/api/invite/' + grIdHash + '/accept')
-        .then(res => {
+        .then(() => {
           eventBus.$emit('accepted-invite');
         });
     },
 
     decline: function(grIdHash) {
       axios.post('/api/invite/' + grIdHash + '/decline')
-        .then(res => {
+        .then(() => {
           eventBus.$emit('declined-invite');
         });
     },
@@ -137,7 +137,7 @@ export default {
       // Leaving just removes this member
       let member = {email: window.email};
       axios.delete('/api/greatings/' + this.greating.id + '/members/' + member.email)
-        .then(res => {
+        .then(() => {
           this.loadMembers();
         });
 
@@ -150,9 +150,6 @@ export default {
 
     deleteGreating: function() {
       axios.delete('/api/greatings/' + this.greating.id)
-        .then(res => {
-          return;
-        })
 
       // Go back to the user's greatings
       eventBus.$emit('showGreatings');

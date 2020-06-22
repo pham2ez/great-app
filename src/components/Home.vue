@@ -8,7 +8,6 @@
     <div class='carousel-container'>
     <b-carousel
       id="carousel-1"
-      v-model="slide"
       :interval="0"
       controls
       indicators
@@ -52,13 +51,9 @@
 
 <script>
 import { eventBus } from "../main";
-import GreatingList from "./GreatingList.vue";
 
 export default {
   name: "Home",
-  components: {
-    GreatingList
-  },
   props: {
     greatingListTabId: {
       type: Number,

@@ -12,7 +12,9 @@ class Availability {
    * time range.
    */
   static createAvailability(availDays, timeRange, length, greatID, range = true) {
-    // tiem range is a 2-element Date list taking the starting hr and min
+    // time range is a 2-element Date list taking the starting hr and min
+console.log(availDays);
+console.log(timeRange);
     let availDict = {};
     let day = new Date(availDays[0]);
     let timeRangeBegin = new Date(timeRange[0]);
