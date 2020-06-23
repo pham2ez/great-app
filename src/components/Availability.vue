@@ -32,7 +32,7 @@
             v-on:mousedown='down($event,block.dayIndex,block.timeIndex)'
             v-on:mouseup='up'
             v-bind:style="selected(block.selected)">
-              {{new Date(parseInt(block.time)).toString().split(' ')[4]}}
+              {{computeTime(parseInt(block.time))}}
             </option>
           </select>
       </div>
@@ -52,19 +52,17 @@
           v-bind:key='block.time'
           v-bind:value='block.time'
           v-bind:selected="false"
+          v-on:mouseleave='leave'
           v-on:mouseover='available($event)'
           v-on:click='finalize($event)'
           v-bind:style="bgc(block.time)">
-              {{new Date(parseInt(block.time)).toString().split(' ')[4]}}
+              {{computeTime(parseInt(block.time))}}
           </option>
         </select>
       </div>
-      <div v-if="!input" class='availusers'>
-        <h3> Available Users: </h3>
-        <div class='section' v-for='user in current' v-bind:key='user'>
-          {{user}}<br>
-        </div>
-      </div>
+      <b-card v-if="!input && show" bg-variant="info" text-variant="white" :header="'Available Users @'+computeTime(parseInt(time))+':'" class="text-center">
+        <b-card-text v-for='user in current' v-bind:key='user'>{{user}}</b-card-text>
+      </b-card>
     </div>
   </div>
 </template>
@@ -73,6 +71,7 @@
 import axios from 'axios';
 import { eventBus } from '../main';
 import ChangeAvailabilityModal from './ChangeAvailabilityModal.vue';
+import moment from 'moment-timezone/moment-timezone';
 
 export default {
   name: 'Availability',
@@ -101,6 +100,9 @@ export default {
     };
   },
   methods: {
+    computeTime: function(time){
+      return moment(time).format("hh:mmA");
+    },
     bgc: function(time){
       if(this.best.includes(time)){
         return{
@@ -142,9 +144,14 @@ export default {
     },
     available: function(event){
       this.time = event.target.value;
+      this.show = true;
       if(event !== null){
         this.current = this.availabileUsers[event.target.value];
       }
+    },
+    leave: function(){
+      this.current = [];
+      this.show = false;
     },
     down: function(event,di,ti){
       let time = new Date(parseInt(event.target.value));
@@ -211,11 +218,7 @@ export default {
             }
             dind++;
           }
-// eslint-disable-next-line no-console
-console.log(this.availability);
-
-
-
+          
       axios.get('/api/greatings/' + this.greatingId + '/schedule/availability')
             .then((res)=>{
               this.availabileUsers = res.data;
@@ -274,14 +277,5 @@ console.log(this.availability);
 }
 form label{
   font-weight:bold;
-}
-.availusers{
-  display: flex;
-  flex-direction: column;
-  border-style: solid;
-  background-color: #ffe5b5;
-  border-color: #f5f5f5;
-  border-radius: 25px;
-  padding: 10px 10px;
 }
 </style>

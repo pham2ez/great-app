@@ -113,11 +113,9 @@ export default {
       }
       let fields = {title: this.title,
       email: window.email,
-      dates: [this.startDate + " 00:",this.endDate + " 00:"],
+      dates: [this.startDate + " 00",this.endDate + " 00"],
       times: [this.startDate + " " + this.startTime,this.startDate + " " + this.endTime],
       length: this.length};
-// eslint-disable-next-line no-console
-      console.log(fields);
       axios.post('/api/greatings/', fields)
         .then(() => {
           this.clearFields();

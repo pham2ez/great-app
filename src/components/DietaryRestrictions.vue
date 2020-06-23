@@ -39,7 +39,7 @@ export default {
     selected: function() {
       if (this.selected !== undefined && this.selected !== null) {
         axios.put('/api/users/' + encodeURIComponent(window.email) + '/restrictions', {restrictions: this.selected})
-          .then(response => {
+          .then(() => {
             eventBus.$emit('update-restriction-success');
           })
           .catch(err => alert(err.response.data.error));

@@ -40,7 +40,7 @@
       This grEATing has been finalized. Invitations are no longer permitted.
     </div>
     <br>
-    <div v-if='!isFinal'>
+    <div class="left-col" v-if='!isFinal'>
       <h5> Invite Members </h5>
       <p>Invite Link: /api/invite/{{ greating.idHash }}</p>
       <p>Search for and add new members by name and/or email: <Search v-bind:greatingId='greating.id'/>{{ successMessage }}</p>

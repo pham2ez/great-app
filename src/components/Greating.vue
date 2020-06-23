@@ -16,8 +16,8 @@ Contains a single grEATing, for use in GreatingList.
         <b-dropdown-item v-if='isOrganizer' v-on:click.stop='deleteGreating'>Delete</b-dropdown-item>
       </b-dropdown>
 
-      <b-dropdown v-else split id="dropdown-1" v-on:click.stop='accept(greating.idHash)' text="Accept" class="m-md-2">
-        <b-dropdown-item v-on:click.stop='decline(greating.idHash)'> Decline </b-dropdown-item>
+      <b-dropdown v-else split id="dropdown-1" v-on:click.stop='accept(greating)' text="Accept" class="m-md-2">
+        <b-dropdown-item v-on:click.stop='decline(greating)'> Decline </b-dropdown-item>
       </b-dropdown>
 
       </div>
@@ -33,9 +33,7 @@ Contains a single grEATing, for use in GreatingList.
 </template>
 
 <script>
-// eslint-disable-next-line
 import axios from 'axios';
-// eslint-disable-next-line
 import { eventBus } from '../main';
 
 export default {
@@ -111,17 +109,17 @@ export default {
         });
     },
 
-    accept: function(grIdHash) {
-      axios.post('/api/invite/' + grIdHash + '/accept')
+    accept: function(greating) {
+      axios.post('/api/invite/' + greating.idHash + '/accept')
         .then(() => {
-          eventBus.$emit('accepted-invite');
+          eventBus.$emit('accepted-invite',greating.title);
         });
     },
 
-    decline: function(grIdHash) {
-      axios.post('/api/invite/' + grIdHash + '/decline')
+    decline: function(greating) {
+      axios.post('/api/invite/' + greating.idHash + '/decline')
         .then(() => {
-          eventBus.$emit('declined-invite');
+          eventBus.$emit('declined-invite',greating.title);
         });
     },
 

@@ -14,9 +14,9 @@ Contains 2 lists of grEATings (active and past).
       <b-tabs pills card vertical v-model='tabId'>
         <b-tab title='Invited'>
           <b-card-text>
-            <div v-if='showActionMessage' color='green'>
+            <b-alert :show="showActionMessage" variant="success" dismissible>
               {{actionMessage}}
-            </div>
+            </b-alert>
 
             <div v-if='invited.length === 0'>You have no grEATing invitations.</div>
             <div v-else v-for='greating in invited' v-bind:key='greating.id'>
@@ -24,7 +24,7 @@ Contains 2 lists of grEATings (active and past).
             </div>
           </b-card-text>
         </b-tab>
-        <b-tab title='Active' active>
+        <b-tab title='Active'>
           <b-card-text>
             <div v-if='active.length === 0'>You have no active grEATings.</div>
             <div v-else v-for='greating in active' v-bind:key='greating.id'>
@@ -97,26 +97,26 @@ export default {
     eventBus.$on('selected', () => {
       this.loadData();
     });
-    eventBus.$on('accepted-invite', () => {
+    eventBus.$on('accepted-invite', (res) => {
       this.loadData();
 
       // Display temporary message
-      this.actionMessage = '' + ' was added to your active grEATings!';
+      this.actionMessage = res + ' was added to your active grEATings!';
       this.showActionMessage = true;
       setTimeout(() => {
         this.showActionMessage = false;
-      }, 2000);
+      }, 5000);
     });
 
-    eventBus.$on('declined-invite', () => {
+    eventBus.$on('declined-invite', (res) => {
       this.loadData();
 
       // Display temporary message
-      this.actionMessage = 'The invitation was removed';
+      this.actionMessage = 'The invitation from '+res+' was removed';
       this.showActionMessage = true;
       setTimeout(() => {
         this.showActionMessage = false;
-      }, 2000);
+      }, 5000);
     });
   },
 

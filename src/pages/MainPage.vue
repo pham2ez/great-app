@@ -87,7 +87,7 @@ export default {
     eventBus.$on('showGreatings', () => {
       this.showMyAccount = false;
       this.showBrowse = false;
-      this.greatingListTabId = undefined;
+      this.greatingListTabId = 1;
       this.showHome = false;
       this.showGreatings = true;
       this.greatingId = undefined;
@@ -100,7 +100,7 @@ export default {
       this.showGreatings = false;
       this.greatingId = res.id;
     });
-    eventBus.$on('showInvites', res => {
+    eventBus.$on('showInvites', () => {
       this.showGreatings = false; // hide Greatings
       this.showMyAccount = false;
       this.showBrowse = false;

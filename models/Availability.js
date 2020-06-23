@@ -1,5 +1,5 @@
 let Timeblock = require('./Timeblock.js');
-
+let moment = require('moment-timezone');
 let data = {};
 /**
  *
@@ -7,32 +7,33 @@ let data = {};
  * @return                 A Availability representing a availability of a grEAT
  */
 class Availability {
+  static normalizeTime(time){
+    return moment.tz(time, 'America/New_York');
+  }
   /**
    * Adds a new availability for a greating given the date range and
    * time range.
    */
   static createAvailability(availDays, timeRange, length, greatID, range = true) {
     // time range is a 2-element Date list taking the starting hr and min
-console.log(availDays);
-console.log(timeRange);
     let availDict = {};
-    let day = new Date(availDays[0]);
-    let timeRangeBegin = new Date(timeRange[0]);
-    let timeRangeEnd = new Date(timeRange[1]);
+    let day = this.normalizeTime(availDays[0]);
+    let timeRangeBegin = this.normalizeTime(timeRange[0]);
+    let timeRangeEnd = this.normalizeTime(timeRange[1]);
     if(range){
-      while(day.getTime() <= new Date(availDays[1]).getTime()){
-        let time = new Date(day.getFullYear(), day.getMonth(),day.getDate()).getTime();
+      while(day.isSameOrBefore(this.normalizeTime(availDays[1]))){
+        let time = this.normalizeTime([day.year(), day.month(),day.date()]).valueOf();
         availDict[time] = [];
         for(let i = 0; i < 60*24; i+=15){
-          if(i >= timeRangeBegin.getHours()*60 + timeRangeBegin.getMinutes() && i < timeRangeEnd.getHours()*60 + timeRangeEnd.getMinutes()){
-            availDict[time].push(Timeblock(new Date(day.getFullYear(), day.getMonth(),day.getDate(), Math.floor(i/60), i%60)));
+          if(i >= timeRangeBegin.hour()*60 + timeRangeBegin.minute() && i < timeRangeEnd.hour()*60 + timeRangeEnd.minute()){
+            availDict[time].push(Timeblock(new Date(this.normalizeTime([day.year(), day.month(), day.date(), Math.floor(i/60), i%60]).valueOf())));
           }else{
-            let tb = Timeblock(new Date(day.getFullYear(), day.getMonth(),day.getDate(), Math.floor(i/60), i%60));
+            let tb = Timeblock(new Date(this.normalizeTime([day.year(), day.month(),day.date(), Math.floor(i/60), i%60]).valueOf()));
             tb.setIsActive(false);
             availDict[time].push(tb);
           }
         }
-        day = new Date(day.getTime() + 86400000);
+        day.add(1, 'days');
       }
     }
     // else{ // given a list of possible days instead of a range

@@ -7,7 +7,7 @@
       <h3> Create An Account </h3>
     </template>
     <div v-if='showSignIn'>
-      <button v-on:click='showCreateAccount'>Don't have an account? Click here to create one.</button><br><br>
+      <b-button v-on:click='showCreateAccount'>Don't have an account? Click here to create one.</b-button><br><br>
 
       <form class='component' v-on:submit.prevent='logIn' method='post'>
         <div class='form-group'>
@@ -22,7 +22,7 @@
       </form>
     </div>
     <div v-else>
-      <button v-on:click='hideCreateAccount'>Have an account already? Click here to sign in.</button><br><br>
+      <b-button v-on:click='hideCreateAccount'>Have an account already? Click here to sign in.</b-button><br><br>
 
       <form class='component' v-on:submit.prevent='createAccount' method='post'>
         <div class='form-group'>
