@@ -183,18 +183,18 @@ class Restaurants {
         let idToRestaurant = {};
         restaurants.forEach(list => {
             list.forEach(r => {
-                if (!idToRestaurant[r.id]) {
-                    idToRestaurant[r.id] = JSON.parse(JSON.stringify(r));
+                if (!idToRestaurant[r.place_id]) {
+                    idToRestaurant[r.place_id] = JSON.parse(JSON.stringify(r));
                 }
-                idToRestaurant[r.id].tags = [...new Set(
-                    function*() { yield* idToRestaurant[r.id].tags; yield* r.tags; }()
+                idToRestaurant[r.place_id].tags = [...new Set(
+                    function*() { yield* idToRestaurant[r.place_id].tags; yield* r.tags; }()
                 )];
-                idToRestaurant[r.id].score = 0;
+                idToRestaurant[r.place_id].score = 0;
                 if (criteria !== undefined) {
-                    idToRestaurant[r.id].tags = idToRestaurant[r.id].tags.filter(tag => criteria.includes(tag));
-                    idToRestaurant[r.id].score = criteria.filter(crit => idToRestaurant[r.id].tags.includes(crit)).length;
+                    idToRestaurant[r.place_id].tags = idToRestaurant[r.place_id].tags.filter(tag => criteria.includes(tag));
+                    idToRestaurant[r.place_id].score = criteria.filter(crit => idToRestaurant[r.place_id].tags.includes(crit)).length;
                 }
-                    // idToRestaurants[r.id].tags = [...idToRestaurants[r.id].tags];
+                    // idToRestaurants[r.place_id].tags = [...idToRestaurants[r.place_id].tags];
             });
         });
         Object.keys(idToRestaurant).forEach(id => {

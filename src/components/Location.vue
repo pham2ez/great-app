@@ -4,19 +4,19 @@
     <p>Your zip code is necessary for grEAT to search for restaurants by location.</p>
     <form v-on:submit.prevent='changeZip' method='post'>
       <div class='form-group'>
-        <div class="group">
+          <b-card>
           <div class="group-item">
           <label class="label" for='newZip'>Zip Code:</label>
           <input id='newZip' v-model.trim='newZip' type='text' name='newZip' v-bind:placeholder='currentZip'>
           </div>
-          <button>Change Zip Code</button>
-        </div>
+          <b-button>Change Zip Code</b-button>
+          </b-card>
       </div>
     </form>
     <p>Putting in your address is optional. You may remove your address at any time by submitting a blank form.</p>
     <form v-on:submit.prevent='changeAddress' method='post'>
       <div class='form-group'>
-        <div class="group">
+          <b-card>
           <div class="group-item">
           <label class="label" for='newStreet'>Street Address:</label>
           <input id='newStreet' v-model.trim='newStreet' type='text' name='newStreet' v-bind:placeholder='decodeHtml(currentStreet)'>
@@ -29,8 +29,8 @@
           <label class="label" for='newState'>State:</label>
           <input id='newState' v-model.trim='newState' type='text' name='newState' v-bind:placeholder='decodeHtml(currentState)'>
           </div>
-          <button>Change Address</button>
-        </div>
+          <b-button>Change Address</b-button>
+          </b-card>
       </div>
     </form>
   </div>
@@ -128,16 +128,6 @@ export default {
 </script>
 
 <style>
-.group {
-  display: flex;
-  flex-direction: column;
-  border-style: solid;
-  background-color: #ffe5b5;
-  border-color: #f5f5f5;
-  border-radius: 25px;
-  padding: 10px 10px;
-  width:100%;
-}
 input{
   flex: 1;
 }

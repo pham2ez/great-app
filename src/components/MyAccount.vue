@@ -3,29 +3,29 @@
     <h3> Change Your Account Information </h3>
     <form v-on:submit.prevent='changeEmail' method='post'>
       <div class='form-group'>
-        <div class="group">
+        <b-card>
         <div class="group-item">
           <label class="label" for='newEmail'>Email Address:</label>
           <input id='newEmail' v-model.trim='newEmail' type='text' name='newEmail' v-bind:placeholder='currentEmail'>
         </div>
-          <button>Change Email Address</button>
-        </div>
+          <b-button>Change Email Address</b-button>
+        </b-card>
       </div>
     </form>
     <form v-on:submit.prevent='changePassword' method='post'>
       <div class='form-group'>
-        <div class="group">
+        <b-card>
         <div class="group-item">
         <label class="label" for='newPassword'>Password:</label>
         <input id='newPassword' v-model.trim='newPassword' type='password' name='newPassword'>
         </div>
-        <button>Change Password</button>
-      </div>
+        <b-button>Change Password</b-button>
+        </b-card>
       </div>
     </form>
     <form v-on:submit.prevent='changeName' method='post'>
       <div class='form-group'>
-        <div class="group">
+        <b-card>
         <div class="group-item">
         <label class="label" for='newFirstName'>First name:</label>
         <input id='newFirstName' v-model.trim='newFirstName' type='text' name='newFirstName' v-bind:placeholder='currentFirstName'>
@@ -35,19 +35,17 @@
         <label class="label" for='newLastName'>Last name:</label>
         <input id='newLastName' v-model.trim='newLastName' type='text' name='newLastName' v-bind:placeholder='currentLastName'>
         </div>
-      <button>Change Name</button>
-    </div>
+      <b-button>Change Name</b-button>
+        </b-card>
       </div>
     </form>
     <h3> Delete Your Account </h3>
     <p> If you wish to delete your account, press the button below.</p>
-    <div class="group">
-    <button v-on:click='showDeleteConfirm'>Delete My Account!</button>
-    </div>
+    <b-button style="width:100%;" variant="danger" v-on:click='showDeleteConfirm'>Delete My Account!</b-button>
     <div v-if='showConfirmBox'>
       Are you sure you want to delete your account? This cannot be undone.<br>
-      <button v-on:click='hideDeleteConfirm'>Cancel</button>
-      <button v-on:click='deleteAccount'>Delete my account</button>
+      <b-button v-on:click='hideDeleteConfirm'>Cancel</b-button>
+      <b-button v-on:click='deleteAccount'>Delete my account</b-button>
     </div>
   </div>
 </template>

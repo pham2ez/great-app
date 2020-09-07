@@ -1,19 +1,24 @@
 <template>
-  <div class='restaurant-list-item' header-tag='header'>
-    <div class="side-by-side"><h5>{{ restaurant.name }}</h5> <i class="suggested" v-if="restaurant.suggestedBy">suggested by {{restaurant.suggestedBy}}</i></div>
+  <div header-tag='header'>
+    <b-card
+    :title="restaurant.name"
+    style="max-width: 20rem;"
+    class="mb-2"
+  >
+    <div class="side-by-side"><i class="suggested" v-if="restaurant.suggestedBy">suggested by {{restaurant.suggestedBy}}</i></div>
     <p v-if="restaurant.formatted_address!==undefined">{{ restaurant.formatted_address }}</p>
     <p v-else-if="restaurant.vicinity!==undefined">{{ restaurant.vicinity }}</p>
     <p v-if="restaurant.website" v-html="`<a href='${restaurant.website}' target='_blank'>website</a>`"></p>
     <br>
-    <i> {{getTags}} </i>
+    <i> {{tags}} </i>
     <div v-if="!browsing">
       <div class='spread'>
         <div v-if='!isFinal' class="btn-group btn-group-sm">
-          <button type="button" class="btn btn-primary" @click="approve('Love')">Love: {{numLoves}}</button>
-          <button type="button" class="btn btn-primary" @click="approve('Like')">Like: {{numLikes}}</button>
-          <button type="button" class="btn btn-secondary" @click="approve('Dislike')">Dislike: {{numDislikes}}</button>
+          <b-button variant="info" type="button" class="btn btn-primary" @click="approve('Love')">Love: {{numLoves}}</b-button>
+          <b-button variant="info" type="button" class="btn btn-primary" @click="approve('Like')">Like: {{numLikes}}</b-button>
+          <b-button variant="info" type="button" class="btn btn-secondary" @click="approve('Dislike')">Dislike: {{numDislikes}}</b-button>
         </div>
-        <b-button v-if='allowChoose && !isFinal' size='sm' v-on:click='choose'> choose </b-button>
+        <b-button v-if='allowChoose && !isFinal' variant="dark" size='sm' v-on:click='choose'> choose </b-button>
       </div>
     </div>
     <div v-else>
@@ -32,6 +37,7 @@
         </b-dropdown>
       </div>
     </div>
+    </b-card>
   </div>
 </template>
 
@@ -43,18 +49,20 @@ import { eventBus } from '../main';
 export default {
   name: 'RestaurantListItem',
 
-  props: ['restaurant','browsing', 'signedIn', 'greatings', 'greatRestaurants'],
+  props: ['restaurant','browsing', 'signedIn', 'greatings', 'greatRestaurants', 'allowChoose'],
 
   data() {
     return {
       numLoves: 0,
       numLikes: 0,
       numDislikes: 0,
-      allowChoose: true,
       tags: "",
       restaurants: [],
       isFinal: false
     };
+  },
+  created: function(){
+    this.getTags();
   },
 
   methods: {
@@ -95,10 +103,8 @@ export default {
       setInterval(() => {
         this.error = '';
       }, 5000);
-    }
-  },
+    },
 
-  computed: {
     getTags: function() {
       this.tags = "";
       for(let tag of this.restaurant.tags){
@@ -113,8 +119,19 @@ export default {
           this.tags += "$";
         }
       }
-      return this.tags;
+    },
+
+    getApprovals: function(){
+      axios.get('/api/greatings/' +this.greatings[0].id + '/' + this.restaurant.place_id + '/approval')
+        .then(response => {
+          this.numLoves = parseInt(response.data.loves);
+          this.numLikes = parseInt(response.data.likes);
+          this.numDislikes = parseInt(response.data.dislikes);
+        });
     }
+  },
+
+  computed: {
   },
 
   mounted: function() {
@@ -125,30 +142,19 @@ export default {
           this.numLoves = parseInt(response.data.loves);
           this.numLikes = parseInt(response.data.likes);
           this.numDislikes = parseInt(response.data.dislikes);
-
-          axios.get('/api/greatings/' + this.greatings[0].id + '/organizer')
-            .then(res => {
-              let organizerInfo = res.data;
-              this.allowChoose = (window.email === organizerInfo.email);
-            })
         });
     }
 
     eventBus.$on('finalized-restaurant', () => {
       this.isFinal = true;
     })
+    eventBus.$on('switch-sort', () => {
+      this.getApprovals();
+    })
   }};
 </script>
 
 <style scoped>
-.restaurant-list-item {
-  border-style: solid;
-  background-color: #ffe5b5;
-  border-color: #f5f5f5;
-  border-radius: 25px;
-  padding: 10px 10px;
-}
-
 .success-message, .error-message {
   display: flex;
   justify-content: center;

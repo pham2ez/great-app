@@ -1,8 +1,8 @@
 <template>
   <div>
     <h3> Would you like to accept this invitation? </h3>
-      <button v-on:click='reject'>No</button>
-      <button v-on:click='accept'>Yes</button>
+      <b-button v-on:click='reject'>No</b-button>
+      <b-button v-on:click='accept'>Yes</b-button>
   </div>
 </template>
 

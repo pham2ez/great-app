@@ -5,7 +5,7 @@
       <h3 v-if="!input">Everyone's Availability</h3>
       <p v-if="input">Click and drag to select/deselect your availabily blocks! The purple blocks are your available time blocks.</p>
 
-      <p v-if="!input"> Hover over to view the members that are available at that time block. Blue blocks represent the best starting time blocks. Otherwise, the darker green the time block, the more members that are available! If you are an organizer, click a time block to finalize a time for the grEATing!</p>
+      <p v-if="!input"> Hover over to view the members that are available at that time block. Blue blocks represent the best starting time blocks. Otherwise, the darker green the time block, the more members that are available. If you are an organizer, click a time block to finalize a time for the grEATing!</p>
        <b-button-group>
         <b-button @click="input = true" v-if='!isFinal' v-bind:disabled="input === true">Input Your Availability</b-button>
         <b-button @click="input = false" v-bind:disabled="input === false">View Everyone's Availability</b-button>

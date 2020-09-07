@@ -2,9 +2,9 @@
   <div class='wrapper'>
     <h4>Search from zip code/restaurant name:</h4>
     <div class="search" v-if="browsing">
-      <input type="text" v-model="search" placeholder="Search..."/>
-      <button v-on:click="loadRestaurants"> Search </button>
-      <b-dropdown id="dropdown" text="Filters" class="m-md-2">
+      <b-form-input type="text" style="height:100%;" v-model="search" placeholder="Search..."/>
+      <b-button variant="dark" v-on:click="loadRestaurants"> Search </b-button>
+      <b-dropdown variant="dark" id="dropdown" text="Filters" class="m-md-2">
         <div  v-for="(group,index) in filters" v-bind:key="index">
           <b-form-checkbox
             v-for="filter in group"
@@ -16,11 +16,16 @@
         </b-dropdown>
     </div>
     <div class="search" v-if="!browsing">
-      <b-button v-b-modal.my-modal>Suggest Restaurant </b-button>
-      <SuggestModal v-bind:greatingID='greatingId'/>
+      <b-button @click="showModal = true">Suggest Restaurant </b-button>
+       <b-modal v-model="showModal" hide-footer id="my-modal">
+         <template v-slot:modal-title>
+          <h3> Restaurant Suggesting </h3>
+        </template>
+          <RestaurantList v-bind:browsing='true' v-bind:signedIn='true' v-bind:greatingId="greatingId"/>
+       </b-modal>
     </div>
     <h3>{{locationHeader}}</h3>
-    <div v-if="filter.length>0" class="side-by-side"> <h5>filter: {{getFilters}}</h5><button @click="clearFilter">Clear</button></div>
+    <div v-if="filter.length>0" class="side-by-side"> <h5>filter: {{getFilters}}</h5><b-button @click="clearFilter">Clear</b-button></div>
     <b-button-group v-if="!browsing">
       <b-button :pressed="sortCriteria==='bestfit'" v-on:click="sortBy('bestfit')">Sort by Best Fit</b-button>
       <b-button :pressed="sortCriteria==='mostpopular'" v-on:click="sortBy('mostpopular')">Sort by Most Popular</b-button>
@@ -37,6 +42,7 @@
           v-bind:signedIn='signedIn'
           v-bind:greatings='greatings'
           v-bind:greatRestaurants='greatRestaurants'
+          v-bind:allowChoose="allowChoose"
         />
       </div>
       <div v-else>
@@ -49,7 +55,6 @@
 <script>
 import axios from 'axios';
 import RestaurantListItem from './RestaurantListItem';
-import SuggestModal from './SuggestModal';
 import Utils from '../models/Utils';
 
 import { eventBus } from '../main';
@@ -57,7 +62,7 @@ import { eventBus } from '../main';
 export default {
   name: 'RestaurantList',
 
-  components: { RestaurantListItem, SuggestModal },
+  components: { RestaurantListItem },
 
   data() {
     return {
@@ -67,6 +72,8 @@ export default {
       search: null,
       locationHeader: '',
       searching: false,
+      showModal: false,
+      allowChoose: false,
       greatings: [],
       filters:{0:["vegetarian", "vegan", "kosher", "halal"],
       1:["mexican","italian", "american", "chinese", "korean", "japanese", "mediterranean"],
@@ -100,6 +107,12 @@ export default {
       this.loadRestaurants();
       this.loadGreatRestaurants();
     });
+
+    axios.get('/api/greatings/' + this.greatingId + '/organizer')
+      .then(res => {
+        let organizerInfo = res.data;
+        this.allowChoose = (window.email === organizerInfo.email);
+      });
   },
   computed:{
     getFilters: function(){
@@ -137,6 +150,12 @@ export default {
   },
 
   methods: {
+
+    decodeHtml: function(html) {
+      var txt = document.createElement('textarea');
+      txt.innerHTML = html;
+      return txt.value;
+    },
     clearFilter: function(){
       this.filter = [];
       this.loadRestaurants();
@@ -144,7 +163,7 @@ export default {
     loadData: function() {
       if(this.browsing && this.signedIn && this.greatingId !== undefined){
         this.greatings = this.greatingId;
-      }else if(this.browsing){
+      }else if(this.browsing && this.signedIn){
         axios.get('/api/users/' + encodeURIComponent(window.email) + '/greatings')
           .then(res => {
             this.greatings = res.data.accepted;
@@ -245,6 +264,11 @@ export default {
           this.locationHeader = `Showing Restaurants nearest to your Group`;
           axios.get(`/api/greatings/${this.greatingId}/restaurants/${this.sortCriteria}`).then(response => {
             this.restaurants = response.data;
+            this.$nextTick(function () {
+              eventBus.$emit('switch-sort');
+              this.$forceUpdate();
+            });
+
           });
       }
     },

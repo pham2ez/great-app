@@ -14,7 +14,7 @@ Responsible for grEATing display in `components/Greating.vue`, tracking approval
 Responsible for allowing users to invite other users to a grEATing in `routes/invite.js`, user creation and account controls (setting address, password, username, dietary restrictions) in `routes/users.js`, `models/User.js`, and `MyAccount.vue`. Also responsible for the notification system (`components/Notifications.vue`) and creating a skeleton for the overall website (`components/MainPage.vue`, `components/GreatingSideNav.vue`, `components/TopNav.vue`).
 
 ### Tuyet:
-Responsible for all availability functionality (settings for availability, displaying best available times, etc) in `routes/greating.js`with schedule in the API, `models/Availability.js`, `components/ChangeAvailabilityModal.vue`,  and `components/Availability.vue`. Also contributed to allowing users to browse restaurants by zip code, and displaying additional restaurant info and tags in `components/RestaurantListItem.vue` and `components/SuggestModal.vue`.
+Responsible for all availability functionality (settings for availability, displaying best available times, etc) in `routes/greating.js`with schedule in the API, `models/Availability.js`, `components/ChangeAvailabilityModal.vue`,  and `components/Availability.vue`. Also contributed to allowing users to browse restaurants by zip code and certain filters, and displaying additional restaurant info in `components/RestaurantListItem.vue`.
 
 ## Local Build Instructions
 1. Download the repo, then expand the zip file.

@@ -15,10 +15,10 @@
                 v-bind:last='m.lastName'
                 v-bind:email='m.email'/>
 
-        <button v-if='isSelf(m) && !isFinal' class="btn btn-link"
-                  v-on:click="leave" size='sm'> leave grEATing </button>
-        <button v-else-if='isOrganizer && !isFinal' class="btn btn-link"
-                  v-on:click="remove(m)" size='sm'> remove member </button>
+        <b-link v-if='isSelf(m) && !isFinal' class="btn btn-link"
+                  v-on:click="leave" size='sm'> leave grEATing </b-link>
+        <b-link v-else-if='isOrganizer && !isFinal' class="btn btn-link"
+                  v-on:click="remove(m)" size='sm'> remove member </b-link>
       </div>
     </div>
     <div v-else>

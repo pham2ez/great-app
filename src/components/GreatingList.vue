@@ -11,7 +11,7 @@ Contains 2 lists of grEATings (active and past).
     <b-card no body>
       <b-button v-b-modal.create-popup> Create New </b-button>
 
-      <b-tabs pills card vertical v-model='tabId'>
+      <b-tabs pills card vertical v-model='tabID'>
         <b-tab title='Invited'>
           <b-card-text>
             <b-alert :show="showActionMessage" variant="success" dismissible>
@@ -61,7 +61,8 @@ export default {
       invited: [],
       accepted: [],
       actionMessage: '',
-      showActionMessage: false
+      showActionMessage: false,
+      tabID: this.tabId
     };
   },
 
