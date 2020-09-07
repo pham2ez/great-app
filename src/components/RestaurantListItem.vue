@@ -63,6 +63,8 @@ export default {
   },
   created: function(){
     this.getTags();
+// enlist-disable-next-line no-console
+console.log(this.greatRestaurants);
   },
 
   methods: {
