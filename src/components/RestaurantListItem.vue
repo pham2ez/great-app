@@ -123,11 +123,14 @@ export default {
 
     getApprovals: function(){
       axios.get('/api/greatings/' +this.greatings[0].id + '/' + this.restaurant.place_id + '/approval')
-        .then(response => {
-          this.numLoves = parseInt(response.data.loves);
-          this.numLikes = parseInt(response.data.likes);
-          this.numDislikes = parseInt(response.data.dislikes);
-        });
+      if (!this.browsing) {
+        axios.get('/api/greatings/' +this.greatings[0].id + '/' + this.restaurant.place_id + '/approval')
+          .then(response => {
+            this.numLoves = parseInt(response.data.loves);
+            this.numLikes = parseInt(response.data.likes);
+            this.numDislikes = parseInt(response.data.dislikes);
+          });
+      }
     }
   },
 

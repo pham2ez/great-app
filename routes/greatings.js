@@ -123,10 +123,13 @@ router.delete('/:grId', (req, res) => {
  * @return an object of the form {email: 'organizer email address'}
  */
  router.get('/:grId/organizer', (req, res) => {
-   let organizer = Greatings.findGreating(req.params.grId).organizer
-   res.end(JSON.stringify({email: organizer.getEmailAddress(),
-            firstName: organizer.getFirstName(),
-            lastName: organizer.getLastName()}));
+    let greating = Greatings.findGreating(req.params.grId)
+    if(greating){
+      let organizer = greating.organizer;
+      res.end(JSON.stringify({email: organizer.getEmailAddress(),
+               firstName: organizer.getFirstName(),
+               lastName: organizer.getLastName()}));
+    }
  })
 
  /**
