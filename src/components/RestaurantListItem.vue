@@ -22,10 +22,10 @@
       </div>
     </div>
     <div v-else>
-      <div v-if="signedIn && browsing && !isNaN(parseInt(greatings))">
+      <div v-if="signedIn && browsing && typeof greatings == 'string'">
          <b-button v-on:click='suggest(greatings,restaurant.place_id)' v-bind:disabled="greatRestaurants[greatings][1].includes(restaurant.place_id)"> Suggest to this grEATing </b-button>
       </div>
-      <div v-if="signedIn && browsing && isNaN(parseInt(greatings))">
+      <div v-if="signedIn && browsing && Array.isArray(greatings)">
         <b-dropdown id="dropdown-1" text="Suggest Restaurant to..." class="m-md-2">
           <b-dropdown-item v-if="greatings.length === 0" disabled>No Available Greatings</b-dropdown-item>
           <b-dropdown-item
@@ -63,10 +63,6 @@ export default {
   },
   created: function(){
     this.getTags();
-// enlist-disable-next-line no-console
-console.log(this.greatRestaurants);
-// enlist-disable-next-line no-console
-console.log(this.greatings);
   },
 
   methods: {
