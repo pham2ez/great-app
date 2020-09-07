@@ -122,7 +122,6 @@ export default {
     },
 
     getApprovals: function(){
-      axios.get('/api/greatings/' +this.greatings[0].id + '/' + this.restaurant.place_id + '/approval')
       if (!this.browsing) {
         axios.get('/api/greatings/' +this.greatings[0].id + '/' + this.restaurant.place_id + '/approval')
           .then(response => {
