@@ -1,5 +1,6 @@
 # dist folder
 dist/
+models/config.js
 
 # .DS_Store
 .DS_Store

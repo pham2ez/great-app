@@ -1,8 +1,9 @@
 const axios = require('axios');
 const Location = require('./Location.js');
+const Config = require('./config.js');
 
 // for Google Places API
-const API_KEY = 'AIzaSyDBw37QJoveJr7H_DeiAbJh3p3VGG2auAI';
+const API_KEY = Config.getAPIKey();
 
 // if user is not logged in, set default search area to Cambridge
 const defaultLocation = Location.getCoordinatesFromZip('02139');
