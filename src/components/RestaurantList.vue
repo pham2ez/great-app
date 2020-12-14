@@ -2,11 +2,11 @@
   <div class='wrapper'>
     <h4>Search from zip code/restaurant name:</h4>
     <div class="search" v-if="browsing">
-      <b-form-input type="text" style="height:100%;" v-model="search" placeholder="Search..."/>
-      <b-button variant="dark" v-on:click="loadRestaurants"> Search </b-button>
+      <b-form-input disabled type="text" style="height:100%;" v-model="search" placeholder="Search..."/>
+      <b-button disabled variant="dark" v-on:click="loadRestaurants"> Search </b-button>
       <b-dropdown variant="dark" id="dropdown" text="Filters" class="m-md-2">
         <div  v-for="(group,index) in filters" v-bind:key="index">
-          <b-form-checkbox
+          <b-form-checkbox disabled
             v-for="filter in group"
             v-bind:key="filter"
             @change="loadCriteria($event,filter)"
@@ -47,6 +47,7 @@
       </div>
       <div v-else>
         <p>There are no restaurants to display.</p>
+        <!-- <p style="color:red;">This web app uses on Google's Place API which we no longer have access to.</p> -->
       </div>
     </div>
   </div>

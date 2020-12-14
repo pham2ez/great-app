@@ -1,4 +1,4 @@
-const API_KEY = 'AIzaSyCFqjwERjR7Zu6jzJBvjwfVZO11yfUZqIE';
+const API_KEY = '';
 
 class Config {
     static getAPIKey() {
